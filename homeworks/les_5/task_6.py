@@ -24,11 +24,15 @@ db = os.path.join(os.path.dirname(__file__), 'task6')
 db_dict = {}
 with open(db, 'r') as file:
     for line in file:
-        tmp = line.split(' ')
-        name = tmp[0].split(':')[0]
-        db_dict[name] = tmp[1:]
+        tmp = line.split(':')
+        db_dict[tmp[0]] = tmp[1].split()
 
 result = {}
 for key, value in db_dict.items():
-    result[key] = sum([int(itm.split('(')[0]) for itm in value if itm.split('(')[0].isdigit()])
+    result[key] = 0
+    for itm in value:
+        try:
+            result[key] += float(itm.split('(')[0])
+        except ValueError:
+            continue
 print(result)
